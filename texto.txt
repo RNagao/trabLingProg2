@@ -1,0 +1,1 @@
+Essa fras é um exemplo e, a partir dessa frase, espera-se que o exercíciofique claro. Essa frase tem pontuação. Todas as construções de palavras consecutivas com pontuação devem ser excluidas.
