@@ -2,7 +2,6 @@
 #include <string>
 
 #include "vertice.h"
-#include "aresta.h"
 
 using namespace std;
 
@@ -17,7 +16,7 @@ string Vertice::getPalavra()
     return palavra;
 }
 
-unsigned getPeso()
+unsigned Vertice::getPeso()
 {
     return peso;
 }

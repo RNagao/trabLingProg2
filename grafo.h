@@ -1,11 +1,13 @@
 #include <vector>
 #include <string>
-#include <fstream>
 
 #include "aresta.h"
 #include "vertice.h"
 
 using namespace std;
+
+#ifndef GRAFO_H
+#define GRAFO_H
 
 class Grafo
 {
@@ -25,7 +27,10 @@ class Grafo
         //vetor de vertices (palavras)
         vector <Vertice> vertices;
         //adicionar aresta
-        void addVertice(string);
+        void adicionaVertice(string);
         //adicionar vertice
-        void addAresta(Vertice *, Vertice *);
+        void adicionaAresta(Vertice *, Vertice *);
+        //retorna o vertice pela palavra
+        Vertice getVertice(string);
 };
+#endif

@@ -1,12 +1,12 @@
 #include <vector>
 #include <string>
 
-#include "vertice.h"
 #include "aresta.h"
+
 
 using namespace std;
 
-Aresta::Aresta(Vertice *verticeOrigem, Vertice *verticeDestino)
+Aresta::Aresta (Vertice *verticeOrigem, Vertice *verticeDestino)
 {
     origem = verticeOrigem;
     destino = verticeDestino;
@@ -25,10 +25,10 @@ void Aresta::incrementaPeso()
 
 Vertice Aresta::getOrigem()
 {
-    return origem;
+    return *origem;
 }
 
 Vertice Aresta::getDestino()
 {
-    return destino;
+    return *destino;
 }

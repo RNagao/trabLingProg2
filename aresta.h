@@ -5,11 +5,14 @@
 
 using namespace std;
 
+#ifndef ARESTA_H
+#define ARESTA_H
+
 class Aresta
 {
     public:
         //construtor da aresta
-        Aresta (Vertice *, Vertice *);
+        Aresta (Vertice*, Vertice*);
         //retorna o numero de repeticoes da sequencia de palavras
         unsigned getPeso();
         //incrementa o peso da aresta
@@ -27,4 +30,5 @@ class Aresta
         //repeticoes da sequencia de palavras
         unsigned peso;
 };
+#endif
 

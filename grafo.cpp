@@ -1,29 +1,91 @@
+#include <iostream>
+#include <string.h>
+#include <fstream>
+#include <stdio.h>
+
 #include "grafo.h"
-#include "aresta.h"
-#include "vertice.h"
 
-Grafo::Grafo
+Grafo::Grafo()
 {
-    string palavra;
-
-    file.open("texto.txt", fstream::in);
-
-    if (!file.is_open())
+    unsigned indice, indiceAux, indiceAux2 = 0;
+    int espaco, pontuacao = 0;
+    ifstream file("texto.txt");
+    string linha;
+    vector <string> palavras;
+    vector <vector <string>> frase;
+    unsigned Nmax = 0;
+    
+    while(getline(file, linha))
     {
-        cout << "Erro ao abrir arquivo." << endl;
-        return;
+        string palavra = "";
+        for (int indice = 0; indice <= linha.length(); indice++)
+        {
+            espaco = strncmp(&linha[indice], " ", 1);
+            pontuacao = ispunct(linha[indice]);
+            
+            if ((espaco != 0) && (pontuacao == 0))
+            {
+                palavra += tolower(linha[indice]);
+            }
+            else if (strncmp(&linha[indice], "-", 1) == 0)
+            {
+                palavra += tolower(linha[indice]);
+            }
+            else if (espaco == 0)
+            {
+                if (palavra.length() > 0)
+                {
+                    palavras.push_back(palavra);
+                    palavra = "";
+                }
+            }
+            else if (pontuacao != 0)
+            {
+                if (palavra.length() > 0)
+                {
+                    palavras.push_back(palavra);
+                    palavra = "";
+                }
+                for (indiceAux = 0; indiceAux < palavras.size(); indiceAux++)
+                {
+                    adicionaVertice(palavras[indiceAux]);
+                }
+                
+                frase.push_back(palavras);
+                
+                palavras.clear();
+            }
+        }
     }
-
-    while (file.good())
+    file.close();
+    cout << vertices.size() <<endl;
+    for (indice = 0; indice < vertices.size(); indice++)
     {
-        file >> palavra;
-        cout << palavra << endl;
+        cout << vertices[indice].getPalavra() << vertices[indice].getPeso() << endl;
     }
+    
+    for (indice = 0; indice < frase.size(); indice++)
+    {
+        for (indiceAux = 0; indiceAux < (frase[indice].size() - 1); indiceAux++)
+        {
+            adicionaAresta(&getVertice(frase[indice][indiceAux]), &getVertice(frase[indice][indiceAux + 1]));
+        }
+    }
+    
+    for (indice = 0; indice < frase.size(); indice++)
+    {
+        if (frase[indice].size() > Nmax)
+        {
+            Nmax = frase[indice].size();
+        }
+    }
+    maximoN = Nmax;
+    periodos = frase;
 }
 
 void Grafo::getPalavraMaisUsada()
 {
-    vector string lista;
+    vector <string> lista;
     unsigned indice, valor = 0;
 
     for (indice = 0; indice < vertices.size(); indice++)
@@ -36,13 +98,13 @@ void Grafo::getPalavraMaisUsada()
         }
         else if (vertices[indice].getPeso() == valor)
         {
-            lista.push_back(vertices[indice].getPalavra())
+            lista.push_back(vertices[indice].getPalavra());
         }
     }
 
     for (indice = 0; indice < lista.size(); indice++)
     {
-        cout << lista[indice] << " ";
+        cout << lista[indice] << endl;
     }
 
     cout << endl << "Valor: " << valor << endl;
@@ -50,18 +112,18 @@ void Grafo::getPalavraMaisUsada()
 
 void Grafo::getMaiorSequenciaN(unsigned n)
 {
-    vector Aresta lista;
-    unsigned indice, peso = 0;
+    vector <Vertice> lista;
+    unsigned indice, indiceAux, peso = 0;
 
     if (n < 2)
     {
         cout << "O valor da sequencia nao pode ser menor que 3" << endl;
-        exit();
+        return;
     }
     else if (n > maximoN)
     {
         cout << "Nao existe uma sequencia com esse numero de palavras" << endl;
-        exit();
+        return;
     }
     else if (n = 2)
     {
@@ -72,9 +134,9 @@ void Grafo::getMaiorSequenciaN(unsigned n)
                 lista.clear();
                 lista.push_back(arestas[indice].getOrigem());
                 lista.push_back(arestas[indice].getDestino());
-                valor = arestas[indice].getPeso();
+                peso = arestas[indice].getPeso();
             }
-            else if (arestas[indice].getPeso() == valor)
+            else if (arestas[indice].getPeso() == peso)
             {
                 lista.push_back(arestas[indice].getOrigem());
                 lista.push_back(arestas[indice].getDestino());
@@ -87,7 +149,17 @@ void Grafo::getMaiorSequenciaN(unsigned n)
             indice += 2;
         }
 
-        cout << "Valor: " << valor << endl;
+        cout << "Valor: " << peso << endl;
+    }
+    else
+    {
+        for (indice = 0; indice < periodos.size(); indice++)
+        {
+            if (periodos[indice].size >= n)
+            {
+                
+            }
+        }
     }
 }
 
@@ -95,10 +167,10 @@ void Grafo::adicionaVertice(string palavra)
 {
     unsigned indice;
     bool palavraExiste = false;
-
+    
     if (vertices.size() == 0)
     {
-        vertices.push_back(Aresta(origem, destino));
+        vertices.push_back(Vertice(palavra));
     }
     else
     {
@@ -114,7 +186,7 @@ void Grafo::adicionaVertice(string palavra)
 
         if (palavraExiste == false)
         {
-            vertices.push_back(Aresta(origem, destino));
+            vertices.push_back(Vertice(palavra));
         }
     }
 }
@@ -132,7 +204,7 @@ void Grafo::adicionaAresta(Vertice *origem, Vertice *destino)
     {
         for (indice = 0; indice < arestas.size(); indice++)
         {
-            if (arestas[indice].getDestino() == destino)
+            if (arestas[indice].getDestino(). getPalavra() == destino->getPalavra())
             {
                 arestas[indice].incrementaPeso();
                 arestaExiste = true;
@@ -143,6 +215,19 @@ void Grafo::adicionaAresta(Vertice *origem, Vertice *destino)
         if (arestaExiste == false)
         {
             arestas.push_back(Aresta(origem, destino));
+        }
+    }
+}
+
+Vertice& Grafo::getVertice(string palavra)
+{
+    unsigned indice;
+    
+    for (indice = 0; indice < vertices.size(); indice++)
+    {
+        if (vertices[indice].getPalavra() == palavra)
+        {
+            return vertices[indice];
         }
     }
 }

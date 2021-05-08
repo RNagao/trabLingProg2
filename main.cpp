@@ -8,6 +8,7 @@ using namespace std;
 
 #define SUCESSO             0
 #define ERROR_LER_ARQUIVO   1
+#define OPCAO_INVALIDA      2
 
 unsigned menu()
 {
@@ -27,7 +28,7 @@ int main()
     unsigned opcao;
     unsigned n;
 
-    Grafo grafo();
+    Grafo grafo;
 
     opcao = menu();
     while (opcao != 0)
@@ -60,5 +61,5 @@ int main()
         opcao = menu();
     }
 
-    return SUCESSO
+    return SUCESSO;
 }
