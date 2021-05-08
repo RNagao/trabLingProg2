@@ -155,7 +155,7 @@ void Grafo::getMaiorSequenciaN(unsigned n)
     {
         for (indice = 0; indice < periodos.size(); indice++)
         {
-            if (periodos[indice].size >= n)
+            if (periodos[indice].size() >= n)
             {
                 
             }
