@@ -60,18 +60,14 @@ Grafo::Grafo()
         }
     }
     file.close();
-    cout << vertices.size() <<endl;
-    for (indice = 0; indice < vertices.size(); indice++)
-    {
-        cout << vertices[indice].getPalavra() << vertices[indice].getPeso() << endl;
-    }
-    
+   
     for (indice = 0; indice < frase.size(); indice++)
     {
         for (indiceAux = 0; indiceAux < (frase[indice].size() - 1); indiceAux++)
         {
             adicionaAresta(getVertice(frase[indice][indiceAux]), getVertice(frase[indice][indiceAux + 1]));
         }
+        cout << endl;
     }
     
     for (indice = 0; indice < frase.size(); indice++)
@@ -82,7 +78,6 @@ Grafo::Grafo()
         }
     }
     maximoN = Nmax;
-    //periodos = frase;
 }
 
 void Grafo::getPalavraMaisUsada()
@@ -122,12 +117,12 @@ void Grafo::getMaiorSequenciaN(unsigned n)
         cout << "O valor da sequencia nao pode ser menor que 3" << endl;
         return;
     }
-  /*   else if (n > maximoN)
+    else if (n > maximoN)
     {
         cout << "Nao existe uma sequencia com esse numero de palavras" << endl;
         return;
-    } */
-    else //if (n == 2)
+    }
+    else if (n == 2)
     {
         for (indice = 0; indice < arestas.size(); indice++)
         {
@@ -153,16 +148,16 @@ void Grafo::getMaiorSequenciaN(unsigned n)
 
         cout << "Valor: " << peso << endl;
     }
-   /*  else
+    else
     {
-        for (indice = 0; indice < periodos.size(); indice++)
+        /* for (indice = 0; indice < periodos.size(); indice++)
         {
             if (periodos[indice].size() >= n)
             {
                 
             }
-        }
-    } */
+        } */
+    }
 }
 
 void Grafo::adicionaVertice(string palavra)
@@ -206,11 +201,15 @@ void Grafo::adicionaAresta(Vertice *origem, Vertice *destino)
     {
         for (indice = 0; indice < arestas.size(); indice++)
         {
-            if (arestas[indice].getDestino(). getPalavra() == destino->getPalavra())
+            if (arestas[indice].getOrigem().getPalavra() == origem->getPalavra())
             {
-                arestas[indice].incrementaPeso();
-                arestaExiste = true;
-                break;
+                if (arestas[indice].getDestino().getPalavra() == destino->getPalavra())
+                {
+                    cout << "incrementa" << arestas[indice].getDestino().getPalavra() << destino->getPalavra() << endl;
+                    arestas[indice].incrementaPeso();
+                    arestaExiste = true;
+                    break;
+                }
             }
         }
 

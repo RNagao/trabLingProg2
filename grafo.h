@@ -21,7 +21,7 @@ class Grafo
 
     private:
         //tamanho maximo da frase no texto
-        int maximoN;
+        unsigned maximoN;
         //vetor de arestas (sequencia da palavra)
         vector <Aresta> arestas;
         //vetor de vertices (palavras)

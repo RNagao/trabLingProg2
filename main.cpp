@@ -55,7 +55,6 @@ int main()
             default:
                 cout << "Opcao invalida" << endl;
                 cout << endl;
-                exit(OPCAO_INVALIDA);
         }
 
         opcao = menu();
