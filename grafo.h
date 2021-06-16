@@ -31,6 +31,6 @@ class Grafo
         //adicionar vertice
         void adicionaAresta(Vertice *, Vertice *);
         //retorna o vertice pela palavra
-        Vertice getVertice(string);
+        Vertice* getVertice(string);
 };
 #endif

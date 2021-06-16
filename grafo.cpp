@@ -7,7 +7,7 @@
 
 Grafo::Grafo()
 {
-    unsigned indice, indiceAux, indiceAux2 = 0;
+    unsigned indice, indiceAux;
     int espaco, pontuacao = 0;
     ifstream file("texto.txt");
     string linha;
@@ -18,7 +18,9 @@ Grafo::Grafo()
     while(getline(file, linha))
     {
         string palavra = "";
-        for (int indice = 0; indice <= linha.length(); indice++)
+        unsigned indice;
+
+        for (indice = 0; indice <= linha.length(); indice++)
         {
             espaco = strncmp(&linha[indice], " ", 1);
             pontuacao = ispunct(linha[indice]);
@@ -68,7 +70,7 @@ Grafo::Grafo()
     {
         for (indiceAux = 0; indiceAux < (frase[indice].size() - 1); indiceAux++)
         {
-            adicionaAresta(&getVertice(frase[indice][indiceAux]), &getVertice(frase[indice][indiceAux + 1]));
+            adicionaAresta(getVertice(frase[indice][indiceAux]), getVertice(frase[indice][indiceAux + 1]));
         }
     }
     
@@ -80,7 +82,7 @@ Grafo::Grafo()
         }
     }
     maximoN = Nmax;
-    periodos = frase;
+    //periodos = frase;
 }
 
 void Grafo::getPalavraMaisUsada()
@@ -113,19 +115,19 @@ void Grafo::getPalavraMaisUsada()
 void Grafo::getMaiorSequenciaN(unsigned n)
 {
     vector <Vertice> lista;
-    unsigned indice, indiceAux, peso = 0;
+    unsigned indice, peso = 0;
 
     if (n < 2)
     {
         cout << "O valor da sequencia nao pode ser menor que 3" << endl;
         return;
     }
-    else if (n > maximoN)
+  /*   else if (n > maximoN)
     {
         cout << "Nao existe uma sequencia com esse numero de palavras" << endl;
         return;
-    }
-    else if (n = 2)
+    } */
+    else //if (n == 2)
     {
         for (indice = 0; indice < arestas.size(); indice++)
         {
@@ -151,7 +153,7 @@ void Grafo::getMaiorSequenciaN(unsigned n)
 
         cout << "Valor: " << peso << endl;
     }
-    else
+   /*  else
     {
         for (indice = 0; indice < periodos.size(); indice++)
         {
@@ -160,7 +162,7 @@ void Grafo::getMaiorSequenciaN(unsigned n)
                 
             }
         }
-    }
+    } */
 }
 
 void Grafo::adicionaVertice(string palavra)
@@ -219,7 +221,7 @@ void Grafo::adicionaAresta(Vertice *origem, Vertice *destino)
     }
 }
 
-Vertice& Grafo::getVertice(string palavra)
+Vertice* Grafo::getVertice(string palavra)
 {
     unsigned indice;
     
@@ -227,7 +229,8 @@ Vertice& Grafo::getVertice(string palavra)
     {
         if (vertices[indice].getPalavra() == palavra)
         {
-            return vertices[indice];
+            return &vertices[indice];
         }
     }
+    return NULL;
 }
